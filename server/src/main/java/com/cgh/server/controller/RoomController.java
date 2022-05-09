@@ -4,16 +4,18 @@ import com.cgh.server.domain.Member;
 import com.cgh.server.domain.Record;
 import com.cgh.server.domain.Subject;
 import com.cgh.server.service.MemberService;
+import com.cgh.server.service.RecordService;
 import com.cgh.server.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/room")
@@ -23,13 +25,17 @@ public class RoomController {
     MemberService memberService;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    RecordService recordService;
+
+    Member member = new Member();
 
     @GetMapping("")
     public String selectSubject(Model model, @AuthenticationPrincipal User user) {
         Member member = memberService.findByUsername(user.getUsername()).get();
         model.addAttribute("member", member);
 
-        return "subject";
+        return "select_room";
     }
 
     @GetMapping("/create")
@@ -50,10 +56,39 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public String enterRoom(@PathVariable("id") Long id, Model model) {
+    public String enterRoom(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) {
+        int count = 0;
+
+        if (memberService.findByUsername(user.getUsername()).isPresent()) {
+            member = memberService.findByUsername(user.getUsername()).get();
+        }
+        if (recordService.findRecordByStartDateAndMember(LocalDate.now(), member).isPresent()) {
+            count = recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get().getSeconds();
+        }
+        model.addAttribute("roomId", id);
+        model.addAttribute("count", count);
+
+        return "room";
+    }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String record(HttpServletRequest request, @AuthenticationPrincipal User user) {
+        Member member = new Member();
         Record record = new Record();
-        record.setSubject(subjectService.findById(id).get());
-        model.addAttribute("record", record);
+
+        if (memberService.findByUsername(user.getUsername()).isPresent()) {
+            member = memberService.findByUsername(user.getUsername()).get();
+        }
+        if (recordService.findRecordByStartDateAndMember(LocalDate.now(), member).isPresent()) {
+            record = recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get();
+        }
+
+        record.setStartDate(LocalDate.now());
+        record.setMember(member);
+        record.setSeconds(Integer.parseInt(request.getParameter("second")));
+
+        recordService.save(record);
 
         return "room";
     }
