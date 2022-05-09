@@ -1,7 +1,7 @@
 package com.cgh.server.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Record {
@@ -13,9 +13,28 @@ public class Record {
     @OneToOne
     private Subject subject;
 
-    private LocalDateTime start;
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Member.class)
+    private Member member;
 
-    private LocalDateTime end;
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    private LocalDate startDate;
+
+    private int seconds;
 
     public Long getId() {
         return id;
@@ -33,19 +52,13 @@ public class Record {
         this.subject = subject;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+
+
+    public int getSeconds() {
+        return seconds;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
     }
 }
