@@ -11,8 +11,6 @@ import java.util.Optional;
 
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
-    Optional<Record> findRecordByStartDate(LocalDate startDate);
-
     List<Record> findRecordsByMember(Member member);
 
     Optional<Record> findRecordByStartDateAndMember(LocalDate startDate, Member member);
