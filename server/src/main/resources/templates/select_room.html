@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공부방 선택</title>
+</head>
+<body>
+<table class="tb_col">
+    <tr>
+        <th>name</th>
+    </tr>
+    <tr th:each="team : ${member.getTeam()}">
+        <td><a th:text="*{team.getName()}" th:href="@{'/room/'+*{team.getId()}}"></a></td>
+    </tr>
+</table>
+</body>
+</html>
