@@ -35,7 +35,7 @@ public class LoginController {
     @GetMapping("")
     public String login(Model model) {
         model.addAttribute("member", new LoginRequest());
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/signup")
