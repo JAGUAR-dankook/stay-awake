@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
 </header>
 <body th:onload="'javascript:setId('+${roomId}+'),setCount('+${count}+')'">
 
-<video id="videoInput" width="500" height="400"></video>
+<video autoplay="true" id="videoElement" width="500" height="400"></video>
 <br>
 <button type="button" th:onclick="'javascript:startCam(),startTimer()'">공부 시작</button>
 <div>
