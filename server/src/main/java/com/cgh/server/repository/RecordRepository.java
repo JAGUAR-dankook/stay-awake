@@ -15,4 +15,6 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     Optional<Record> findRecordByStartDateAndMember(LocalDate startDate, Member member);
 
+    List<Record> findRecordsByStartDateBetween(LocalDate start, LocalDate end);
+
 }
