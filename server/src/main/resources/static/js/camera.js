@@ -2,22 +2,24 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 
 var constraints = {audio: false, video: true};
 
-startCam();
-
 function startCam() {
+    var video = document.querySelector("#videoElement");
 
-    const video = document.getElementById("videoInput");
-
-    function successCallback(stream) {
-        video.srcObject = stream;
-        video.play();
+    if (navigator.mediaDevices.getUserMedia) {
+        console.log(navigator.mediaDevices.getUserMedia)
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.log("Something went wrong!" + error);
+            });
     }
 
-    function errorCallback(error) {
-        console.log(error);
-    }
-
-    navigator.mediaDevices.getUserMedia(constraints, successCallback, errorCallback);
+    video.addEventListener( "loadedmetadata", () => {
+        console.log(video.videoWidth);
+        console.log(video.videoHeight);
+    });
 }
 
 function pauseCam() {
