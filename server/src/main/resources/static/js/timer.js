@@ -4,6 +4,9 @@ var id = 0;
 
 countTimers();
 
+const toggleTimerBtn = document.getElementById('toggleBtn');
+toggleTimerBtn.addEventListener('click', toggleTimer);
+
 function countTimers() {
 
     setInterval(timer, 1000);
@@ -45,9 +48,21 @@ function getCount() {
 
 function startTimer() {
     pause = false;
+    toggleTimerBtn.value = "pause"
 }
 
 function pauseTimer() {
     pause = true;
     document.getElementById("sendCount").value = count;
+    toggleTimerBtn.value = "start"
+}
+
+
+function toggleTimer(){
+    if(pause){
+        startTimer()
+    }
+    else{
+        pauseTimer()
+    }
 }

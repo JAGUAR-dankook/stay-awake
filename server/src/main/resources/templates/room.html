@@ -12,18 +12,25 @@
 </header>
 <body th:onload="'javascript:setId('+${roomId}+'),setCount('+${count}+')'">
 
-<video autoplay="true" id="videoElement" width="500" height="400"></video>
+<video id="localVideo" autoplay playsinline></video>
+<video id="remoteVideo" autoplay playsinline></video>
+
 <br>
-<button type="button" th:onclick="'javascript:startCam(),startTimer()'">공부 시작</button>
+<div>
+    <button id="startButton">Start</button>
+    <button id="callButton">Call</button>
+    <button id="hangupButton">Hang Up</button>
+</div>
 <div>
     <form method="post">
         <input type="hidden" id="sendCount" name="second"/>
-        <input type="submit" value="일시정지" th:onclick="'javascript:pauseCam(),pauseTimer()'">
+        <input type="submit" id="toggleBtn" value="start" th:onclick="'javascript:pauseCam(),pauseTimer()'">
     </form>
 </div>
 <h3 id="timer"></h3>
-<script type="text/javascript" th:src="@{/js/camera.js}"></script>
 <script type="text/javascript" th:src="@{/js/timer.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
 </body>
 </html>
