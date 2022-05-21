@@ -1,6 +1,5 @@
 var pause = true;
 var count = 0;
-var id = 0;
 
 countTimers();
 
