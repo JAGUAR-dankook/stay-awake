@@ -74,6 +74,11 @@ public class RoomController {
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String record(HttpServletRequest request, @AuthenticationPrincipal User user) {
+
+        if (request.getParameter("second").equals("")) {
+            return null;
+        }
+
         Member member = new Member();
         Record record = new Record();
 
@@ -87,7 +92,6 @@ public class RoomController {
         record.setStartDate(LocalDate.now());
         record.setMember(member);
         record.setSeconds(Integer.parseInt(request.getParameter("second")));
-
         recordService.save(record);
 
         return "room";
