@@ -3,30 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style> table {
-        width: 70%;
-        border: 1px solid dodgerblue;
-        text-align: center;
-    }
-
-    th, td {
-        border: 1px solid dodgerblue;
-    } </style>
 </head>
 <body>
-<table>
-    <tr>
-        <th>Mon</th>
-        <th>Tue</th>
-        <th>Wed</th>
-        <th>Thu</th>
-        <th>Fri</th>
-        <th>Sat</th>
-        <th>Sun</th>
-    </tr>
-    <tr th:each="d : ${week}">
-        <td th:text="*{d}"></td>
-    </tr>
-</table>
+<h2>오늘 공부시간 : <a th:text="${dayrecord}"></a></h2>
+<h2>이번주 공부시간 : <a th:text="${weekrecord}"></a></h2>
 </body>
 </html>
