@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stay Awake</title>
 </head>
-<header>
-    <h1>Stay Awake</h1>
-</header>
 <body th:onload="'javascript:setId('+${roomId}+'),setCount('+${count}+')'">
+<div th:replace="layout/header::header"></div>
 
 <video id="localVideo" autoplay playsinline></video>
 <video id="remoteVideo" autoplay playsinline></video>

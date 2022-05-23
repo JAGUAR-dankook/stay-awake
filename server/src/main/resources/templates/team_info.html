@@ -5,6 +5,7 @@
     <title th:object="${team}" th:text="${team.getName()}"></title>
 </head>
 <body>
+<div th:replace="layout/header::header"></div>
 <div th:object="${team}">
     <h2>team ID: <span th:text="*{getId()}"></span></h2>
     <h2>team name: <span th:text="*{getName()}"></span></h2>

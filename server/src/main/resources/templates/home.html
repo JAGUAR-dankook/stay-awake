@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Home</title>
 </head>
-<h1>Stay Awake</h1>
 <body>
+<div th:replace="layout/header::header"></div>
 <div th:object="${currentUser}">
     <h2>Welcome, <span th:text="*{getUsername()}"></span>!</h2>
 </div>
