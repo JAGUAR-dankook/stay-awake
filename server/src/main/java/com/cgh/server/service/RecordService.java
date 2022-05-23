@@ -29,4 +29,8 @@ public class RecordService {
     public Optional<Record> findRecordByStartDateAndMember(LocalDate startDate, Member member) {
         return recordRepository.findRecordByStartDateAndMember(startDate, member);
     }
+
+    public List<Record> findRecordsByStartDateBetweenAndMember(LocalDate start, LocalDate end, Member member) {
+        return recordRepository.findRecordsByStartDateBetweenAndMember(start, end, member);
+    }
 }
