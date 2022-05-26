@@ -26,6 +26,10 @@ let remoteStream;
 let localPeerConnection;
 let remotePeerConnection;
 
+window.onload = function () {
+    startAction();
+}
+
 
 // Define MediaStreams callbacks.
 
@@ -107,7 +111,7 @@ function handleConnectionSuccess(peerConnection) {
 
 // Logs that the connection failed.
 function handleConnectionFailure(peerConnection, error) {
-    trace(`${getPeerName(peerConnection)} failed to add ICE Candidate:\n`+
+    trace(`${getPeerName(peerConnection)} failed to add ICE Candidate:\n` +
         `${error.toString()}.`);
 }
 
