@@ -21,6 +21,7 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/stat")
 public class StatController {
+    final String NO_RECORD = "00:00:00";
 
     @Autowired
     RecordService recordService;
@@ -32,12 +33,15 @@ public class StatController {
         LocalDate now = LocalDate.now();
         TemporalField fieldISO = WeekFields.of(Locale.KOREA).dayOfWeek();
         Member member = memberService.findByUsername(user.getUsername()).get();
+        String dayRecord = NO_RECORD;
+        String weekRecord = NO_RECORD;
 
-        String dayRecord = timeFormatter(recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get().getSeconds());
-        String weekRecord = timeFormatter(sumRecords(recordService.findRecordsByStartDateBetweenAndMember(now.with(fieldISO, 1), now, member)));
-
-        System.out.println(dayRecord);
-        System.out.println(weekRecord);
+        if (recordService.findRecordByStartDateAndMember(LocalDate.now(), member).isPresent()) {
+            dayRecord = timeFormatter(recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get().getSeconds());
+        }
+        if (!recordService.findRecordsByStartDateBetweenAndMember(now.with(fieldISO, 1), now, member).isEmpty()) {
+            weekRecord = timeFormatter(sumRecords(recordService.findRecordsByStartDateBetweenAndMember(now.with(fieldISO, 1), now, member)));
+        }
 
         model.addAttribute("dayrecord", dayRecord);
         model.addAttribute("weekrecord", weekRecord);
@@ -59,7 +63,7 @@ public class StatController {
 
     private int sumRecords(List<Record> records) {
         int result = 0;
-        for(Record r : records){
+        for (Record r : records) {
             result += r.getSeconds();
         }
         return result;
