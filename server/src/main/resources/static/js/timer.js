@@ -2,7 +2,6 @@ var pause = true;
 var count = 0;
 
 countTimers();
-
 const toggleTimerBtn = document.getElementById('toggleBtn');
 toggleTimerBtn.addEventListener('click', toggleTimer);
 
@@ -12,13 +11,13 @@ function countTimers() {
 
     function timer() {
         if (!pause) {
-            count = count + 1;
+            count += 1;
 
             var hours = Math.floor((count % (60 * 60 * 24)) / (60 * 60));
             var minutes = Math.floor((count % (60 * 60)) / 60);
             var seconds = Math.floor(count % 60);
 
-            document.getElementById("timer").innerHTML = hours + ": "
+            document.getElementById("localTimer").innerHTML = hours + ": "
                 + minutes + ": " + seconds;
 
         }
@@ -37,7 +36,7 @@ function setId(roomId) {
     id = roomId
 }
 
-function setCount(oldCount){
+function setCount(oldCount) {
     count = oldCount
 }
 
@@ -57,11 +56,10 @@ function pauseTimer() {
 }
 
 
-function toggleTimer(){
-    if(pause){
+function toggleTimer() {
+    if (pause) {
         startTimer()
-    }
-    else{
+    } else {
         pauseTimer()
     }
 }
