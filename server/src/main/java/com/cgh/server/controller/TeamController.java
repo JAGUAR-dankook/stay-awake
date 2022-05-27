@@ -33,7 +33,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public String loadTeam(@PathVariable("id") String id, Model model) {
+    public String loadTeam(@PathVariable("id") Long id, Model model) {
         Team team = teamService.findById(id).get();
         model.addAttribute("team", team);
         model.addAttribute("members", memberService.findMemberByTeam(team));

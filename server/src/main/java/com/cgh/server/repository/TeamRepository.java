@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TeamRepository extends JpaRepository<Team, String> {
+public interface TeamRepository extends JpaRepository<Team, Long> {
     @Override
-    Optional<Team> findById(String s);
+    Optional<Team> findById(Long id);
 
     //List<Group> findGroupByMember(Member member);
 

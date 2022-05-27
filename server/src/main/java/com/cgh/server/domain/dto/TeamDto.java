@@ -2,13 +2,13 @@ package com.cgh.server.domain.dto;
 
 public class TeamDto {
 
-    String id;
+    Long id;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

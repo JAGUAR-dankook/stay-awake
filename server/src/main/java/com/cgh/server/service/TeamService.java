@@ -21,7 +21,7 @@ public class TeamService {
         return teamRepository.findAllByMember(member);
     }
 
-    public Optional<Team> findById(String id) {
+    public Optional<Team> findById(Long id) {
         return teamRepository.findById(id);
     }
 
