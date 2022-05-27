@@ -187,7 +187,6 @@ function createdAnswer(description) {
 // Define and add behavior to buttons.
 
 // Define action buttons.
-const startButton = document.getElementById('startButton');
 const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
 
@@ -198,7 +197,6 @@ hangupButton.disabled = true;
 
 // Handles start button action: creates local MediaStream.
 function startAction() {
-    startButton.disabled = true;
     navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
         .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
     trace('Requesting local stream.');
@@ -261,7 +259,6 @@ function hangupAction() {
 }
 
 // Add click event handlers for buttons.
-startButton.addEventListener('click', startAction);
 callButton.addEventListener('click', callAction);
 hangupButton.addEventListener('click', hangupAction);
 
