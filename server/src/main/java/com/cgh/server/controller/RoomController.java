@@ -6,6 +6,7 @@ import com.cgh.server.domain.Subject;
 import com.cgh.server.service.MemberService;
 import com.cgh.server.service.RecordService;
 import com.cgh.server.service.SubjectService;
+import com.cgh.server.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/room")
@@ -27,6 +29,8 @@ public class RoomController {
     SubjectService subjectService;
     @Autowired
     RecordService recordService;
+    @Autowired
+    TeamService teamService;
 
     Member member = new Member();
 
@@ -65,9 +69,14 @@ public class RoomController {
         if (recordService.findRecordByStartDateAndMember(LocalDate.now(), member).isPresent()) {
             count = recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get().getSeconds();
         }
+
+        List<Member> teammates = teamService.findById(id).get().getMember();
+        teammates.remove(member);
+
         model.addAttribute("roomId", id);
         model.addAttribute("count", count);
         model.addAttribute("username", member.getUsername());
+        model.addAttribute("members", teammates);
 
         return "room";
     }
