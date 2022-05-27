@@ -46,13 +46,13 @@ function getCount() {
 
 function startTimer() {
     pause = false;
-    toggleTimerBtn.value = "pause"
+    toggleTimerBtn.value = "일시 정지"
 }
 
 function pauseTimer() {
     pause = true;
     document.getElementById("sendCount").value = count;
-    toggleTimerBtn.value = "start"
+    toggleTimerBtn.value = "공부 시작"
 }
 
 
