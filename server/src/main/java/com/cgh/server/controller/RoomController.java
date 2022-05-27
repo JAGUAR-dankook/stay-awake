@@ -67,6 +67,7 @@ public class RoomController {
         }
         model.addAttribute("roomId", id);
         model.addAttribute("count", count);
+        model.addAttribute("username", member.getUsername());
 
         return "room";
     }
