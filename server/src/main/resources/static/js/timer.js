@@ -12,17 +12,9 @@ function countTimers() {
     function timer() {
         if (!pause) {
             count += 1;
-
-            var hours = Math.floor((count % (60 * 60 * 24)) / (60 * 60));
-            var minutes = Math.floor((count % (60 * 60)) / 60);
-            var seconds = Math.floor(count % 60);
-
-            document.getElementById("localTimer").innerHTML = hours + ": "
-                + minutes + ": " + seconds;
-
+            document.getElementById("localTimer").innerHTML = timeFormatter(count);
         }
     }
-
 }
 
 function dataSend() {
@@ -62,4 +54,8 @@ function toggleTimer() {
     } else {
         pauseTimer()
     }
+}
+
+function timeFormatter(seconds) {
+    return new Date(seconds * 1000).toISOString().slice(11, 19);
 }
