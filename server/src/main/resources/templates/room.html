@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/css/room.css"/>
     <title>Stay Awake</title>
 </head>
 <body>
@@ -11,19 +12,25 @@
 
 <div th:replace="layout/header::header"></div>
 
-<div>
-    <video id="localVideo" autoplay playsinline></video>
-    <h3 id="localTimer">00:00:00</h3>
-    <video id="remoteVideo" autoplay playsinline></video>
-    <h3 id="remoteTimer">00:00:00</h3>
-    <div>
-        <button id="callButton">Call</button>
-        <button id="hangupButton">Hang Up</button>
-        <form method="post">
-            <input type="hidden" id="sendCount" name="second"/>
-            <input type="submit" id="toggleBtn" value="공부 시작">
-        </form>
+<div class="memberContainer">
+    <div class="memberElement">
+        <video id="localVideo" autoplay playsinline></video>
+        <h3 id="localTimer">00:00:00</h3>
     </div>
+
+    <div id="teammate" class="memberElement" th:each="member : ${members}">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <h3 th:text="${member.getUsername()}"></h3>
+        <h3 id="remoteTimer">00:00:00</h3>
+    </div>
+</div>
+<div>
+    <button id="callButton">Call</button>
+    <button id="hangupButton">Hang Up</button>
+    <form method="post">
+        <input type="hidden" id="sendCount" name="second"/>
+        <input type="submit" id="toggleBtn" value="공부 시작">
+    </form>
 </div>
 
 <script type="text/javascript" th:src="@{/js/timer.js}"></script>
@@ -80,11 +87,12 @@
     function onMessageReceived(payload) {
         var message = JSON.parse(payload.body);
         const remoteTimer = document.querySelector('#remoteTimer');
-
+        //TODO: 나중에 접속한 사용자에게는 remoteVideo 뜨지 않음
         if (message.type === 'JOIN') {
-            //TODO: 팀원 입장 시
+            callAction();
+
         } else if (message.type === 'LEAVE') {
-            //TODO: 팀원 퇴장 시
+            hangupAction();
         } else {
             remoteTimer.innerHTML = message.content;
         }
