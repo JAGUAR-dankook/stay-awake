@@ -1,30 +1,96 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Stay Awake</title>
 </head>
-<body th:onload="'javascript:setId('+${roomId}+'),setCount('+${count}+')'">
+<body>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+
 <div th:replace="layout/header::header"></div>
 
-<video id="localVideo" autoplay playsinline></video>
-<video id="remoteVideo" autoplay playsinline></video>
 <div>
-    <button id="startButton">Start</button>
-    <button id="callButton">Call</button>
-    <button id="hangupButton">Hang Up</button>
-    <form method="post">
-        <input type="hidden" id="sendCount" name="second"/>
-        <input type="submit" id="toggleBtn" value="start">
-    </form>
+    <video id="localVideo" autoplay playsinline></video>
+    <h3 id="localTimer">00:00:00</h3>
+    <video id="remoteVideo" autoplay playsinline></video>
+    <h3 id="remoteTimer">00:00:00</h3>
+    <div>
+        <button id="startButton">Start</button>
+        <button id="callButton">Call</button>
+        <button id="hangupButton">Hang Up</button>
+        <form method="post">
+            <input type="hidden" id="sendCount" name="second"/>
+            <input type="submit" id="toggleBtn" value="start">
+        </form>
+    </div>
 </div>
-<h3 id="timer"></h3>
+
 <script type="text/javascript" th:src="@{/js/timer.js}"></script>
 <script type="text/javascript" th:src="@{/js/webrtc.js}"></script>
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    var myTimer = document.querySelector('#localTimer');
 
+    var stompClient = null;
+    var username = null;
+
+    window.addEventListener('load', function () {
+        connect();
+        setCount([[${count}]]);
+        startAction();
+    });
+
+    setInterval(sendTime, 1000);
+
+    function connect(event) {
+        username = [[${username}]];
+        if (username) {
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, onConnected, onError);
+        }
+        event.preventDefault();
+    }
+
+    function onConnected() {
+        stompClient.subscribe('/topic/public', onMessageReceived);
+        stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender: username, type: 'JOIN'})
+        )
+    }
+
+    function onError() {
+        alert("error");
+    }
+
+    function sendTime() {
+        var messageContent = String(myTimer.innerHTML);
+        if (stompClient) {
+            var chatMessage = {
+                sender: username,
+                content: messageContent,
+                type: 'CHAT'
+            };
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        }
+    }
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+        const remoteTimer = document.querySelector('#remoteTimer');
+
+        if (message.type === 'JOIN') {
+            //TODO: 팀원 입장 시
+        } else if (message.type === 'LEAVE') {
+            //TODO: 팀원 퇴장 시
+        } else {
+            remoteTimer.innerHTML = message.content;
+        }
+    }
+
+</script>
 </body>
 </html>
