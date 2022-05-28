@@ -3,10 +3,12 @@ package com.cgh.server.controller;
 import com.cgh.server.domain.Member;
 import com.cgh.server.domain.Record;
 import com.cgh.server.domain.Subject;
+import com.cgh.server.domain.dto.MemberRecordDTO;
 import com.cgh.server.service.MemberService;
 import com.cgh.server.service.RecordService;
 import com.cgh.server.service.SubjectService;
 import com.cgh.server.service.TeamService;
+import com.cgh.server.util.TimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -72,11 +75,21 @@ public class RoomController {
 
         List<Member> teammates = teamService.findById(id).get().getMember();
         teammates.remove(member);
+        List<MemberRecordDTO> dtos = new ArrayList<>();
+
+        for (Member member : teammates) {
+            MemberRecordDTO dto = new MemberRecordDTO();
+            dto.setMember(member);
+            if (recordService.findRecordByStartDateAndMember(LocalDate.now(), member).isPresent()) {
+                dto.setRecord(TimeFormatter.format(recordService.findRecordByStartDateAndMember(LocalDate.now(), member).get().getSeconds()));
+            }
+            dtos.add(dto);
+        }
 
         model.addAttribute("roomId", id);
         model.addAttribute("count", count);
         model.addAttribute("username", member.getUsername());
-        model.addAttribute("members", teammates);
+        model.addAttribute("memberRecordDTOs", dtos);
 
         return "room";
     }
