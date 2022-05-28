@@ -17,16 +17,13 @@
         <video id="localVideo" autoplay playsinline></video>
         <h3 id="localTimer">00:00:00</h3>
     </div>
-
-    <div id="teammate" class="memberElement" th:each="member : ${members}">
+    <div id="teammate" class="memberElement" th:each="dto : ${memberRecordDTOs}">
         <video id="remoteVideo" autoplay playsinline></video>
-        <h3 th:text="${member.getUsername()}"></h3>
-        <h3 id="remoteTimer">00:00:00</h3>
+        <h3 th:text="*{dto.getMember().getUsername()}"></h3>
+        <h3 id="remoteTimer" th:text="*{dto.getRecord()}">00:00:00</h3>
     </div>
 </div>
 <div>
-    <button id="callButton">Call</button>
-    <button id="hangupButton">Hang Up</button>
     <form method="post">
         <input type="hidden" id="sendCount" name="second"/>
         <input type="submit" id="toggleBtn" value="공부 시작">
@@ -43,6 +40,7 @@
 
     var stompClient = null;
     var username = null;
+    var isRemoteOn = false;
 
     window.addEventListener('load', function () {
         connect();
@@ -64,8 +62,7 @@
 
     function onConnected() {
         stompClient.subscribe('/topic/public', onMessageReceived);
-        stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender: username, type: 'JOIN'})
-        )
+        stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender: username, type: 'JOIN'}));
     }
 
     function onError() {
@@ -88,9 +85,11 @@
         var message = JSON.parse(payload.body);
         const remoteTimer = document.querySelector('#remoteTimer');
         //TODO: 나중에 접속한 사용자에게는 remoteVideo 뜨지 않음
+        if (message.sender !== username && !isRemoteOn) {
+            callAction();
+        }
         if (message.type === 'JOIN') {
             callAction();
-
         } else if (message.type === 'LEAVE') {
             hangupAction();
         } else {
