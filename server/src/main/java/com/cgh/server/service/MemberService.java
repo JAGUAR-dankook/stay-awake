@@ -21,6 +21,7 @@ public class MemberService implements UserDetailsService {
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
         memberRepository.save(new Member("admin", new BCryptPasswordEncoder().encode("1234"), Role.ROLE_ADMIN));
+        memberRepository.save(new Member("user", new BCryptPasswordEncoder().encode("1234"), Role.ROLE_MEMBER));
     }
 
     public Optional<Member> findByUsername(String username) {
