@@ -1,0 +1,14 @@
+.memberContainer {
+    max-width: 100%;
+    display: flex;
+}
+
+.memberElement {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#localVideo #remoteVideo {
+    height: 400px;
+    width: 500px;
+}
