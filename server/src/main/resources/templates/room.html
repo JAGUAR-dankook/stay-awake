@@ -36,7 +36,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:inline="javascript">
-    var myTimer = document.querySelector('#localTimer');
+    const myTimer = document.querySelector('#localTimer');
+    const remoteTimer = document.querySelector('#remoteTimer');
 
     var stompClient = null;
     var username = null;
@@ -83,8 +84,6 @@
 
     function onMessageReceived(payload) {
         var message = JSON.parse(payload.body);
-        const remoteTimer = document.querySelector('#remoteTimer');
-        //TODO: 나중에 접속한 사용자에게는 remoteVideo 뜨지 않음
         if (message.sender !== username && !isRemoteOn) {
             callAction();
         }
@@ -92,7 +91,7 @@
             callAction();
         } else if (message.type === 'LEAVE') {
             hangupAction();
-        } else {
+        } else if(message.sender !== username) {
             remoteTimer.innerHTML = message.content;
         }
     }
