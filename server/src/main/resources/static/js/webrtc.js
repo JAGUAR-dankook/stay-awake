@@ -187,12 +187,8 @@ function createdAnswer(description) {
 // Define and add behavior to buttons.
 
 // Define action buttons.
-const callButton = document.getElementById('callButton');
-const hangupButton = document.getElementById('hangupButton');
 
 // Set up initial action buttons status: disable call and hangup.
-callButton.disabled = true;
-hangupButton.disabled = true;
 
 
 // Handles start button action: creates local MediaStream.
@@ -204,9 +200,6 @@ function startAction() {
 
 // Handles call button action: creates peer connection.
 function callAction() {
-    callButton.disabled = true;
-    hangupButton.disabled = false;
-
     trace('Starting call.');
     startTime = window.performance.now();
 
@@ -245,6 +238,8 @@ function callAction() {
     trace('localPeerConnection createOffer start.');
     localPeerConnection.createOffer(offerOptions)
         .then(createdOffer).catch(setSessionDescriptionError);
+
+    isRemoteOn = true;
 }
 
 // Handles hangup action: ends up call, closes connections and resets peers.
@@ -253,14 +248,11 @@ function hangupAction() {
     remotePeerConnection.close();
     localPeerConnection = null;
     remotePeerConnection = null;
-    hangupButton.disabled = true;
-    callButton.disabled = false;
+    isRemoteOn = false;
     trace('Ending call.');
 }
 
 // Add click event handlers for buttons.
-callButton.addEventListener('click', callAction);
-hangupButton.addEventListener('click', hangupAction);
 
 
 // Define helper functions.
