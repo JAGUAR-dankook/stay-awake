@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="/css/room.css"/>
     <title>Stay Awake</title>
 </head>
@@ -15,18 +15,19 @@
 <div class="memberContainer">
     <div class="memberElement">
         <video id="localVideo" autoplay playsinline></video>
+        <h2 th:text="${username}"></h2>
         <h3 id="localTimer">00:00:00</h3>
     </div>
     <div id="teammate" class="memberElement" th:each="dto : ${memberRecordDTOs}">
         <video id="remoteVideo" autoplay playsinline></video>
-        <h3 th:text="*{dto.getMember().getUsername()}"></h3>
+        <h2 th:text="*{dto.getMember().getUsername()}"></h2>
         <h3 id="remoteTimer" th:text="*{dto.getRecord()}">00:00:00</h3>
     </div>
 </div>
-<div>
+<div class="toggle-button-container" style="text-align: center">
     <form method="post">
         <input type="hidden" id="sendCount" name="second"/>
-        <input type="submit" id="toggleBtn" value="공부 시작">
+        <input style="" type="submit" id="toggleBtn" value="공부 시작">
     </form>
 </div>
 
@@ -91,7 +92,7 @@
             callAction();
         } else if (message.type === 'LEAVE') {
             hangupAction();
-        } else if(message.sender !== username) {
+        } else if (message.sender !== username) {
             remoteTimer.innerHTML = message.content;
         }
     }
