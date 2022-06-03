@@ -2,12 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css"/>
     <title>Create new room</title>
 </head>
 <body>
-<form action="/team/create" method="post" th:object="${team}">
-    <input type="text" name="username" placeholder="팀 이름" th:field="*{name}">
-    <button type="submit">생성</button>
-</form>
+<div th:replace="layout/header::header"></div>
+<div class="center">
+    <form action="/team/create" method="post" th:object="${team}">
+        <input type="text" name="username" placeholder="팀 이름" th:field="*{name}">
+        <button type="submit">생성</button>
+    </form>
+</div>
 </body>
 </html>

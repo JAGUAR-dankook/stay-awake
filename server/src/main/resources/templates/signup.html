@@ -1,37 +1,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css"/>
     <title>회원가입</title>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-<div class="container" style="text-align:center">
-
-    <div style="padding:50px;">
+<div class="container">
+    <div id="loginFormContainer">
+        <form method="post" th:object="${member}">
+            <div><input type="text" class="form-control" id="username" th:field="*{username}" placeholder="아이디"></div>
+            <div><input type="password" class="form-control" id="password" th:field="*{password}" placeholder="비밀번호">
+            </div>
+            <div>
+                <button class="btn btn-primary">회원가입</button>
+            </div>
+        </form>
     </div>
-    <form method="post" th:object="${member}">
-        <div>
-            <label for="username" style="font-size:20px;"></label>
-            <input type="text" style="width:250px; height:30px;" id="username" th:field="*{username}" placeholder="아이디">
-        </div>
-        <div style="padding:10px;">
-            <div class="mb-3">
-                <label for="password" style="font-size:20px;"></label>
-                <input type="password" style="width:250px; height:30px;" id="password" th:field="*{password}"
-                       placeholder="비밀번호">
-            </div>
-            <div style="display: block">
-            </div>
-            <div style="padding:10px;">
-                <button type="submit" style="width:250px; height:50px;
-                      background-color:#5e5eec;
-                      border-color: #5e5eec;
-                      color:white;
-                      font-size:20px;" class="btn btn-primary">회원가입
-                </button>
-            </div>
-        </div>
-    </form>
 </div>
 </body>
 </html>

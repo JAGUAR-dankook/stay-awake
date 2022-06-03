@@ -2,17 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/style.css"/>
     <title>Home</title>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-<div th:object="${currentUser}">
-    <h2>Welcome, <span th:text="*{getUsername()}"></span>!</h2>
+<h2>Welcome, <span th:text="${currentUser.getUsername()}"></span>!</h2>
+<div class="imageButtonContainer">
+    <button class="imageButton" type="button"><a th:href="@{/team}"><img th:src="@{img/btn_group.png}" alt="그룹"></a>
+    </button>
+    <button class="imageButton" type="button"><a th:href="@{/room}"><img th:src="@{/img/btn_room.png}" alt="공부시작"></a>
+    </button>
+    <button class="imageButton" type="button"><a th:href="@{/stat}"><img th:src="@{/img/btn_stat.png}" alt="통계"></a>
+    </button>
 </div>
-<p><a th:href="@{/team}">그룹</a></p>
-<p><a th:href="@{/room}">공부 시작</a></p>
-<p><a th:href="@{/stat}">통계</a></p>
-
 </body>
-
 </html>

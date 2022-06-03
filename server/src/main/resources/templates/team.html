@@ -2,24 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/style.css"/>
     <title>Stay Awake</title>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-<h1>Group</h1>
-<p><a th:href="@{team/join}">팀 참가</a></p>
-<p><a th:href="@{team/create}">팀 생성</a></p>
-<table class="tb_col">
-    <tr>
-        <th>ID</th>
-        <th>name</th>
-    </tr>
-    <tr th:each="g : ${team}">
-        <td th:text="*{g.getId()}"></td>
-        <td><a th:text="*{g.getName()}" th:href="@{'/team/'+*{g.getId()}}"></a></td>
-    </tr>
-</table>
-
+<div id="linkContainer">
+    <button class="linkButton"><a class="linkText" th:href="@{team/join}">팀 참가</a></button>
+    <button class="linkButton"><a class="linkText" th:href="@{team/create}">팀 생성</a></button>
+</div>
+<div class="tableContainer">
+    <table class="tb_col">
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+        </tr>
+        <tr th:each="g : ${team}">
+            <td th:text="*{g.getId()}"></td>
+            <td><a th:text="*{g.getName()}" th:href="@{'/team/'+*{g.getId()}}"></a></td>
+        </tr>
+    </table>
+</div>
 </body>
 
 </html>

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
 <div th:fragment="header">
-    <a th:href="@{/home}">
+    <a id="headerLink" th:href="@{/home}">
         <header>
-            <h1>Stay Awake</h1>
+            <h1 id="headerText">Stay Awake</h1>
         </header>
     </a>
 </div>
