@@ -7,7 +7,9 @@
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-<h2>오늘 공부시간 : <a th:text="${dayrecord}"></a></h2>
-<h2>이번주 공부시간 : <a th:text="${weekrecord}"></a></h2>
+<div class="center">
+    <h2>오늘 공부시간 : <a th:text="${dayrecord}"></a></h2>
+    <h2>이번주 공부시간 : <a th:text="${weekrecord}"></a></h2>
+</div>
 </body>
 </html>
