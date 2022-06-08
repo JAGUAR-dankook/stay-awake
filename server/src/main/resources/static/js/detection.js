@@ -1,8 +1,6 @@
 // the link to your model provided by Teachable Machine export panel
 
 const URL = "https://teachablemachine.withgoogle.com/models/Aq3LV8H1M/";
-var detectBtn = document.getElementById("detectBtn");
-detectBtn.addEventListener('click', init);
 
 let model, webcam, labelContainer, maxPredictions;
 
