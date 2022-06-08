@@ -38,7 +38,6 @@ function gotLocalMediaStream(mediaStream) {
     localVideo.srcObject = mediaStream;
     localStream = mediaStream;
     trace('Received local stream.');
-    callButton.disabled = false;  // Enable call button.
 }
 
 // Handles error by logging a message to the console.
@@ -107,7 +106,7 @@ function handleConnection(event) {
 // Logs that the connection succeeded.
 function handleConnectionSuccess(peerConnection) {
     trace(`${getPeerName(peerConnection)} addIceCandidate success.`);
-};
+}
 
 // Logs that the connection failed.
 function handleConnectionFailure(peerConnection, error) {
