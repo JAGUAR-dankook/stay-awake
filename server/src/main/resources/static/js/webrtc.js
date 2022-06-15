@@ -26,11 +26,6 @@ let remoteStream;
 let localPeerConnection;
 let remotePeerConnection;
 
-window.onload = function () {
-    startAction();
-}
-
-
 // Define MediaStreams callbacks.
 
 // Sets the MediaStream as the video element src.
