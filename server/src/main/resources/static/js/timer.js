@@ -30,6 +30,7 @@ function setId(roomId) {
 
 function setCount(oldCount) {
     count = oldCount
+    document.getElementById("localTimer").innerHTML = timeFormatter(count);
 }
 
 function getCount() {
