@@ -7,13 +7,15 @@
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
-<table>
-    <tr>
-        <th>name</th>
-    </tr>
-    <tr th:each="team : ${member.getTeam()}">
-        <td><a th:text="*{team.getName()}" th:href="@{'/room/'+*{team.getId()}}"></a></td>
-    </tr>
-</table>
+<div class="center">
+    <table>
+        <tr>
+            <th class="largeText">공부방 선택</th>
+        </tr>
+        <tr th:each="team : ${member.getTeam()}">
+            <td><a class="largeText" th:text="*{team.getName()}" th:href="@{'/room/'+*{team.getId()}}"></a></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
