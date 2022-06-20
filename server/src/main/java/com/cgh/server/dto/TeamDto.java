@@ -1,4 +1,4 @@
-package com.cgh.server.domain.dto;
+package com.cgh.server.dto;
 
 public class TeamDto {
 

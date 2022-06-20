@@ -1,4 +1,4 @@
-package com.cgh.server.domain.dto;
+package com.cgh.server.dto;
 
 import com.cgh.server.domain.Member;
 
