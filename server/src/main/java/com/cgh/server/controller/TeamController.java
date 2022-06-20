@@ -2,7 +2,7 @@ package com.cgh.server.controller;
 
 import com.cgh.server.domain.Member;
 import com.cgh.server.domain.Team;
-import com.cgh.server.domain.dto.TeamDto;
+import com.cgh.server.dto.TeamDto;
 import com.cgh.server.service.MemberService;
 import com.cgh.server.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;

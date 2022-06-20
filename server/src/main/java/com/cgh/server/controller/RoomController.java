@@ -2,11 +2,9 @@ package com.cgh.server.controller;
 
 import com.cgh.server.domain.Member;
 import com.cgh.server.domain.Record;
-import com.cgh.server.domain.Subject;
-import com.cgh.server.domain.dto.MemberRecordDTO;
+import com.cgh.server.dto.MemberRecordDTO;
 import com.cgh.server.service.MemberService;
 import com.cgh.server.service.RecordService;
-import com.cgh.server.service.SubjectService;
 import com.cgh.server.service.TeamService;
 import com.cgh.server.util.TimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,6 @@ public class RoomController {
     @Autowired
     MemberService memberService;
     @Autowired
-    SubjectService subjectService;
-    @Autowired
     RecordService recordService;
     @Autowired
     TeamService teamService;
@@ -38,28 +34,12 @@ public class RoomController {
     Member member = new Member();
 
     @GetMapping("")
-    public String selectSubject(Model model, @AuthenticationPrincipal User user) {
+    public String selectRoom(Model model, @AuthenticationPrincipal User user) {
+//        memberService.findByUsername(user.getUsername()).ifPresent(member-> model.addAttribute("member", member));
         Member member = memberService.findByUsername(user.getUsername()).get();
         model.addAttribute("member", member);
 
         return "select_room";
-    }
-
-    @GetMapping("/create")
-    public String createSubject(Model model) {
-        model.addAttribute("subject", new Subject());
-        return "subject_create";
-    }
-
-    @PostMapping("/create")
-    public String create(Subject subject, @AuthenticationPrincipal User user) {
-        Member member;
-        if (memberService.findByUsername(user.getUsername()).isPresent()) {
-            member = memberService.findByUsername(user.getUsername()).get();
-            member.addSubject(subject);
-            memberService.save(member);
-        }
-        return "redirect:/room";
     }
 
     @GetMapping("/{id}")

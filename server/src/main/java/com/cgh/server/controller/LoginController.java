@@ -2,8 +2,8 @@ package com.cgh.server.controller;
 
 import com.cgh.server.domain.Member;
 import com.cgh.server.domain.Role;
-import com.cgh.server.domain.dto.LoginRequest;
-import com.cgh.server.domain.dto.RegistryRequest;
+import com.cgh.server.dto.LoginRequest;
+import com.cgh.server.dto.RegistryRequest;
 import com.cgh.server.service.LoginService;
 import com.cgh.server.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
